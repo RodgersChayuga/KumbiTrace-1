@@ -1,3 +1,38 @@
-node_modules/
-.DS_Store
+# Django specific
 *.log
+*.pot
+*.pyc
+__pycache__/
+media
+
+# Environment variables
+.env
+
+# Virtualenv
+venv/
+ENV/
+env/
+
+# VS Code settings
+.vscode/
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Python egg files
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+var
+sdist
+develop-eggs
+
+# PyCharm settings
+.idea/
