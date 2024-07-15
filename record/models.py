@@ -50,7 +50,10 @@ class Record(models.Model):
     status = models.CharField(choices=STATUSES)
 
     def __str__(self):
-        return self.status
+        return f"{self.status}: {self.get_status_display()}"
+
+    def get_status_kv(self):
+        return self.category, self.get_status_dislay()
 
 
 class County(models.Model):
