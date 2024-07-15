@@ -4,9 +4,12 @@
 *.pyc
 __pycache__/
 media
+*.swp
+
 
 # Environment variables
 .env
+.misc
 
 # Virtualenv
 venv/
@@ -15,6 +18,9 @@ env/
 
 # VS Code settings
 .vscode/
+
+# Vim Settings
+.vim
 
 # macOS
 .DS_Store
