@@ -1,14 +1,14 @@
 from django.urls import path, re_path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
 
     path('', views.homepage, name=""),
 
     path('about-us', views.about, name="about"),
-
-    path('report', views.report, name="report"),
 
     path('search', views.search, name="search"),
 
@@ -26,6 +26,13 @@ urlpatterns = [
 
     path('dashboard', views.dashboard, name="dashboard"),
 
+    path('report', views.report_missing_person, name='report_missing_person'),
+
+    path('missing-person/<int:pk>/', views.missing_person_detail, name='missing_person_detail'),
+
     path('user-logout', views.user_logout, name="user-logout"),
 
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

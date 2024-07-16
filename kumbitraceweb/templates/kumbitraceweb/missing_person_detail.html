@@ -1,0 +1,62 @@
+{% extends 'kumbitraceweb/base2.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            {% if missing_person.photo %}
+                <img src="{{ missing_person.photo.url }}" alt="{{ missing_person.name }}" class="img-fluid rounded">
+            {% else %}
+                <div class="bg-secondary text-white p-5 text-center">No Photo Available</div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h2>{{ missing_person.name }}</h2>
+            <p><strong>Case Number:</strong> {{ missing_person.case_number }}</p>
+            <p><strong>Age:</strong> {{ missing_person.age }}</p>
+            <p><strong>Gender:</strong> {{ missing_person.gender }}</p>
+            <p><strong>Last Seen:</strong> {{ missing_person.last_seen_date }} at {{ missing_person.last_seen_location }}</p>
+            <p><strong>Status:</strong> {{ missing_person.get_status_display }}</p>
+            <p><strong>Description:</strong> {{ missing_person.description }}</p>
+            <p><strong>Contact Person:</strong> {{ missing_person.get_contact_person_type_display }}</p>
+            <p><strong>Contact Phone:</strong> {{ missing_person.contact_person_phone }}</p>
+            <p><strong>Date Reported:</strong> {{ missing_person.date_reported }}</p>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h3>Submit a Tip</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ tip_form|crispy }}
+            <button type="submit" class="btn btn-primary mt-3">Submit Tip</button>
+        </form>
+    </div>
+
+    {% if user.is_staff %}
+    <div class="mt-5">
+        <h3>Tips Received</h3>
+        {% if tips %}
+            <ul class="list-group">
+            {% for tip in tips %}
+                <li class="list-group-item">
+                    <p><strong>{{ tip.date_submitted }}</strong></p>
+                    <p>{{ tip.content }}</p>
+                    <p><small>
+                        {% if tip.is_anonymous %}
+                            Submitted anonymously (IP: {{ tip.ip_address }})
+                        {% else %}
+                            Submitted by: {{ tip.submitted_by.username }}
+                        {% endif %}
+                    </small></p>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tips received yet.</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
