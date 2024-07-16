@@ -30,6 +30,7 @@ DEBUG = config('DEBUG', default=True, cast=bool)
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]']
 
 # Application definition
+AUTH_USER_MODEL = 'KumbiTrace.CustomUser'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'kumbitraceweb',
 ]
+
+AUTH_USER_MODEL = 'kumbitraceweb.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

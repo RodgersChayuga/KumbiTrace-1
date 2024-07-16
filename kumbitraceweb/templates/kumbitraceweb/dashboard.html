@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>First Responder Dashboard - KumbiTrace</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css">
+    <style>
+        body {
+            padding-top: 56px;
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 56px;
+            bottom: 0;
+            left: 0;
+            z-index: 100;
+            padding: 0;
+            box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+            background-color: #f8f9fa;
+        }
+        .sidebar-sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 56px;
+            height: calc(100vh - 56px);
+            padding-top: 1rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .sidebar .nav-link {
+            color: #333;
+        }
+        .sidebar .nav-link.active {
+            color: #007bff;
+        }
+        .sidebar .nav-link:hover {
+            color: #0056b3;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .action-card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .action-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        .action-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 767.98px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                top: 56px;
+            }
+            .content {
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="#">KumbiTrace</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="sidebarMenu">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-user-plus"></i> Report New Case</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-search"></i> Search Missing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-lightbulb"></i> Submit a Tip</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-check-circle"></i> Found Persons</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<div class="content">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h1>First Responder Dashboard</h1>
+                <p>Quick access to critical missing persons operations</p>
+            </div>
+        </div>
+
+        <!-- Main Action Cards -->
+        <div class="row mb-5">
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="action-card bg-primary text-white p-4 text-center">
+                    <i class="fas fa-user-plus action-icon"></i>
+                    <h3>Report New Case</h3>
+                    <p>File a new missing person report</p>
+                    <a href="/report" class="btn btn-light mt-3">Report Now</a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="action-card bg-info text-white p-4 text-center">
+                    <i class="fas fa-search action-icon"></i>
+                    <h3>Search Missing</h3>
+                    <p>Search database of missing persons</p>
+                    <a href="/search" class="btn btn-light mt-3">Search</a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="action-card bg-warning text-dark p-4 text-center">
+                    <i class="fas fa-lightbulb action-icon"></i>
+                    <h3>Submit a Tip</h3>
+                    <p>Provide information on a case</p>
+                    <a href="/tip" class="btn btn-dark mt-3">Submit Tip</a>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="action-card bg-success text-white p-4 text-center">
+                    <i class="fas fa-check-circle action-icon"></i>
+                    <h3>Found Persons</h3>
+                    <p>View recently found individuals</p>
+                    <a href="/found" class="btn btn-light mt-3">View Found</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Reports and Quick Search -->
+        <div class="row">
+            <!-- Recent Reports -->
+            <div class="col-md-8 mb-4">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h3 class="mb-0">Recent Reports</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Case ID</th>
+                                        <th>Name</th>
+                                        <th>Last Seen</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for report in recent_reports %}
+                                    <tr>
+                                        <td>{{ report.case_id }}</td>
+                                        <td>{{ report.name }}</td>
+                                        <td>{{ report.last_seen }}</td>
+                                        <td>
+                                            <span class="badge {% if report.status == 'Active' %}bg-danger{% elif report.status == 'Found' %}bg-success{% else %}bg-secondary{% endif %}">
+                                                {{ report.status }}
+                                            </span>
+                                        </td>
+                                        <td><a href="/case/{{ report.case_id }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Search and Stats -->
+            <div class="col-md-4 mb-4">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Quick Search</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action="/quick-search" method="GET">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" name="query" placeholder="Name or Case ID">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Search</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h3 class="mb-0">Current Stats</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Active Cases
+                                <span class="badge bg-primary rounded-pill">{{ active_cases }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Found Today
+                                <span class="badge bg-success rounded-pill">{{ found_today }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                New Tips
+                                <span class="badge bg-warning rounded-pill">{{ new_tips }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

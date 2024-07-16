@@ -12,13 +12,19 @@ urlpatterns = [
 
     path('search', views.search, name="search"),
 
+    path('tip', views.tip, name="tip"),
+
+    path('found', views.found, name="found"),
+
     path('contact-us', views.contact, name="contact"),
 
     path('privacy-policy', views.policy, name="policy"),
 
     path('register', views.register, name="register"),
 
-    path('login', views.login, name="login"),
+    path('login', views.logincustom, name="logincustom"),
+
+    path('dashboard', views.dashboard, name="dashboard"),
 
     path('user-logout', views.user_logout, name="user-logout"),
 
