@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html,
+body,
+#root{
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto Flex';
+  @apply bg-[#F0E5D2] text-black
+}
+a:hover {
+  @apply transition duration-200;
+  @apply text-black
+}
