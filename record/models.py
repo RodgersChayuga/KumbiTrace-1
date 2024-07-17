@@ -22,21 +22,16 @@ class Record(models.Model):
     last_name = models.CharField(max_length=25, blank=False)
     nickname = models.CharField(max_length=100, blank=True)
 
-    seen_county = models.ForeignKey("County",
-                                    on_delete=models.PROTECT,
-                                    null=False)
+    county_id = models.ForeignKey("County",
+                                  on_delete=models.RESTRICT,
+                                  null=False)
     seen_location = models.CharField(max_length=255)
     seen_date = models.DateField()
     seen_time = models.TimeField()
     seen_dressing = models.TextField()
-    reported_by = models.ForeignKey("User",
+    reported_by = models.ForeignKey(User,
                                     on_delete=models.RESTRICT,
-                                    blank=True,
-                                    null=True)
-    verified_by = models.ForeignKey("User",
-                                    on_delete=models.RESTRICT,
-                                    blank=True,
-                                    null=True)
+                                    blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     phone_no = models.CharField(max_length=12)
@@ -57,7 +52,7 @@ class Record(models.Model):
 
 
 class County(models.Model):
-    id = models.IntegerField(unique=True)
+    id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(unique=True, null=False)
 
     def __str__(self):
@@ -71,7 +66,7 @@ class RecordUpdates(models.Model):
                                   blank=True,
                                   null=True)
 
-    updated_by = models.ForeignKey("User",
+    updated_by = models.ForeignKey(User,
                                    on_delete=models.RESTRICT,
                                    blank=True,
                                    null=True)
@@ -95,7 +90,7 @@ class Reporter(models.Model):
         ('unregistered', 'Unregistered'),
     )
 
-    user_id = models.ForeignKey("User", on_delete=models.RESTRICT, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, null=True)
     full_name = models.CharField(max_length=25)
     phone_number = models.CharField(max_length=12)
     email_address = models.EmailField(max_length=50)
@@ -110,7 +105,7 @@ class Relationships(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     created = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey("User",
+    created_by = models.ForeignKey(User,
                                    on_delete=models.RESTRICT,
                                    null=False)
     status = models.BooleanField(default=True)
@@ -127,7 +122,7 @@ class Comments(models.Model):
     record_id = models.ForeignKey("Record",
                                   on_delete=models.RESTRICT,
                                   null=True)
-    user_id = models.ForeignKey("User", on_delete=models.RESTRICT, null=True)
+    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, null=True)
     comment = models.TextField()
     created = models.DateTimeField()
     status = models.BooleanField(default=True)

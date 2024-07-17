@@ -20,9 +20,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('kumbitraceweb.urls')),
-    path('records/', include('kumbitraceweb.urls')),
-    path('verify/', include('kumbitraceweb.urls')),
-    path('reports/', include('kumbitraceweb.urls')),
+    path('record/', include('record.urls')),
+    path('verify/', include('verify.urls')),
+    path('reports/', include('reports.urls')),
 ]
 
 admin.site.index_title = 'KumbiTrace'
