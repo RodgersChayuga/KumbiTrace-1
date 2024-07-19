@@ -1,9 +1,8 @@
 import uuid
 from django.db import models
-from django.contrib.auth.models import User
+from kumbitraceweb.models import CustomUser
 
 
-# Create your models here.
 class Record(models.Model):
     STATUSES = (
         ('new', 'New'),
@@ -15,9 +14,9 @@ class Record(models.Model):
         ('arrested', 'Confirmed Arrested'),
     )
 
-    id = models.UUIDField(primary_key=True,
-                          default=uuid.uuid4,
-                          editable=False)
+    uuid = models.UUIDField(primary_key=True,
+                            default=uuid.uuid4,
+                            editable=False)
     first_name = models.CharField(max_length=25, blank=False)
     last_name = models.CharField(max_length=25, blank=False)
     nickname = models.CharField(max_length=100, blank=True)
@@ -29,7 +28,7 @@ class Record(models.Model):
     seen_date = models.DateField()
     seen_time = models.TimeField()
     seen_dressing = models.TextField()
-    reported_by = models.ForeignKey(User,
+    reported_by = models.ForeignKey(CustomUser,
                                     on_delete=models.RESTRICT,
                                     blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -66,7 +65,7 @@ class RecordUpdates(models.Model):
                                   blank=True,
                                   null=True)
 
-    updated_by = models.ForeignKey(User,
+    updated_by = models.ForeignKey(CustomUser,
                                    on_delete=models.RESTRICT,
                                    blank=True,
                                    null=True)
@@ -90,7 +89,9 @@ class Reporter(models.Model):
         ('unregistered', 'Unregistered'),
     )
 
-    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, null=True)
+    user_id = models.ForeignKey(CustomUser,
+                                on_delete=models.RESTRICT,
+                                null=True)
     full_name = models.CharField(max_length=25)
     phone_number = models.CharField(max_length=12)
     email_address = models.EmailField(max_length=50)
@@ -105,7 +106,7 @@ class Relationships(models.Model):
     id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100, unique=True)
     created = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User,
+    created_by = models.ForeignKey(CustomUser,
                                    on_delete=models.RESTRICT,
                                    null=False)
     status = models.BooleanField(default=True)
@@ -122,7 +123,9 @@ class Comments(models.Model):
     record_id = models.ForeignKey("Record",
                                   on_delete=models.RESTRICT,
                                   null=True)
-    user_id = models.ForeignKey(User, on_delete=models.RESTRICT, null=True)
+    user_id = models.ForeignKey(CustomUser,
+                                on_delete=models.RESTRICT,
+                                null=True)
     comment = models.TextField()
     created = models.DateTimeField()
     status = models.BooleanField(default=True)
