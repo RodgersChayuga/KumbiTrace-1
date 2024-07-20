@@ -43,9 +43,11 @@ develop-eggs
 
 # dependencies
 node_modules
+.pnpm*
 .pnp
 .pnp.js
 .yarn/install-state.gz
+.bun*
 
 # testing
 coverage
