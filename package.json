@@ -1,0 +1,15 @@
+{
+  "name": "kumbitrace",
+  "version": "1.0.0",
+  "description": "KumbiTrace is a citizen-centered and citizen-driven Missing Persons platform designed to address the increasing incidents of enforced disappearances, armed abductions, and the discovery of bodies in various parts of Kenya.",
+  "main": "tailwind.config.js",
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  },
+  "scripts": {
+    "tw": "npx tailwindcss -i ./style.css -o ./kumbitraceweb/static/css/tailwind.css --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodgers Chayuga",
+  "license": "ISC"
+}
