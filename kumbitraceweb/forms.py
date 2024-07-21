@@ -79,14 +79,26 @@ class MissingPersonForm(forms.ModelForm):
         return phone
 
 class TipForm(forms.ModelForm):
+    missing_person = forms.ModelChoiceField(
+        queryset=MissingPerson.objects.filter(status='approved'),
+        empty_label="Select a case",
+        required=True
+    )
+
     class Meta:
         model = Tip
-        fields = ['missing_person', 'content']
+        fields = ['missing_person', 'content', 'phone_number', 'x_username']
         widgets = {
-            'missing_person': forms.Select(attrs={'class': 'form-control'}),
-            'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+            'content': forms.Textarea(attrs={'rows': 4, 'placeholder': 'Enter your tip here'}),
+            'phone_number': forms.TextInput(attrs={'placeholder': 'Enter your phone number'}),
+            'x_username': forms.TextInput(attrs={'placeholder': 'Enter your X username (e.g., @username)'}),
         }
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['missing_person'].queryset = MissingPerson.objects.filter(status='approved')
+        super(TipForm, self).__init__(*args, **kwargs)
+        self.fields['phone_number'].required = False
+        self.fields['x_username'].required = False
+        
+        # If a missing person is already selected, make the field readonly
+        if 'initial' in kwargs and kwargs['initial'].get('missing_person'):
+            self.fields['missing_person'].widget.attrs['readonly'] = True

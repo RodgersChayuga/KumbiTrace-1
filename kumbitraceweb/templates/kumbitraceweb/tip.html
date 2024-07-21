@@ -1,0 +1,38 @@
+{% extends "kumbitraceweb/base2.html" %}
+
+{% block title %}Submit a Tip - KumbiTrace{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Submit a Tip</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% if not missing_person %}
+        <div class="mb-3">
+            {{ form.missing_person.label_tag }}
+            {{ form.missing_person }}
+        </div>
+        {% else %}
+        <h2>Case: {{ missing_person.name }} (Case Number: {{ missing_person.case_number }})</h2>
+        {{ form.missing_person.as_hidden }}
+        {% endif %}
+        <div class="mb-3">
+            {{ form.content.label_tag }}
+            {{ form.content }}
+        </div>
+        <div class="mb-3">
+            <p><strong>Would you like us to reach out for further comment?</strong></p>
+            <small class="form-text text-muted">If yes, please provide at least one of the following. Leave both blank for anonymous reporting.</small>
+        </div>
+        <div class="mb-3">
+            {{ form.phone_number.label_tag }}
+            {{ form.phone_number }}
+        </div>
+        <div class="mb-3">
+            {{ form.x_username.label_tag }}
+            {{ form.x_username }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Tip</button>
+    </form>
+</div>
+{% endblock %}

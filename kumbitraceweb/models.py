@@ -102,6 +102,18 @@ class Tip(models.Model):
     ip_address = models.GenericIPAddressField()
     date_submitted = models.DateTimeField(auto_now_add=True)
     is_anonymous = models.BooleanField(default=False)
+    phone_number = models.CharField(max_length=15, blank=True, null=True, validators=[
+        RegexValidator(
+            regex=r'^(?:\+254|0)[17]\d{8}$',
+            message="Phone number must be entered in the format: '+254XXXXXXXXX' or '07XXXXXXXX' or '01XXXXXXXX'. Up to 13 digits allowed."
+        ),
+    ])
+    x_username = models.CharField(max_length=15, blank=True, null=True, validators=[
+        RegexValidator(
+            regex=r'^@?(\w){1,15}$',
+            message="X username must be up to 15 characters long and can only contain letters, numbers, and underscores."
+        ),
+    ])
 
     def __str__(self):
         return f"Tip for Case {self.missing_person.case_number} - {self.date_submitted}"

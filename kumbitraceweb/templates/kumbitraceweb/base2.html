@@ -55,8 +55,8 @@
                 width: 100%;
             }
         }
+        {% block extra_css %}{% endblock %}
     </style>
-    {% block extra_css %}{% endblock %}
 </head>
 <body>
 
@@ -68,31 +68,28 @@
     <div class="collapse navbar-collapse" id="sidebarMenu">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a class="nav-link" href="{% url 'dashboard' %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/report"><i class="fas fa-user-plus"></i> Report New Case</a>
+                <a class="nav-link" href="{% url 'report_missing_person' %}"><i class="fas fa-user-plus"></i> Report New Case</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/search"><i class="fas fa-search"></i> Search Missing</a>
+                <a class="nav-link" href="{% url 'search' %}"><i class="fas fa-search"></i> Search Missing</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/tip"><i class="fas fa-lightbulb"></i> Submit a Tip</a>
+                <a class="nav-link" href="{% url 'tip' %}"><i class="fas fa-lightbulb"></i> Submit a Tip</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/found"><i class="fas fa-check-circle"></i> Found Persons</a>
+                <a class="nav-link" href="{% url 'found' %}"><i class="fas fa-check-circle"></i> Found Persons</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'user-logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-            </li>
+                <a class="nav-link" href="{% url 'user-logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>            </li>
         </ul>
     </div>
 </nav>
 
 <div class="content">
-    <div class="container-fluid">
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

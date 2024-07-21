@@ -1,0 +1,45 @@
+{% extends "kumbitraceweb/base.html" %}
+
+{% block title %}About Us - KumbiTrace{% endblock %}
+
+{% block content %}
+<section class="about-us-section section-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="text-center mb-5">About KumbiTrace</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">
+                <h2>Our Mission</h2>
+                <p>At KumbiTrace, we are dedicated to reuniting missing persons with their loved ones. Our platform serves as a crucial link between families, communities, and law enforcement agencies in the search for missing individuals.</p>
+            </div>
+            <div class="col-lg-6">
+                <h2>Who We Are</h2>
+                <p>KumbiTrace is a team of passionate individuals committed to making a difference. Our diverse group includes technologists, social workers, and community advocates, all working together to create a safer society.</p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h2>Our Approach</h2>
+                <p>We leverage cutting-edge technology and community engagement to:
+                    <ul>
+                        <li>Provide a user-friendly platform for reporting and tracking missing persons cases</li>
+                        <li>Facilitate quick dissemination of information to aid in searches</li>
+                        <li>Collaborate with law enforcement and other agencies to maximize search efforts</li>
+                        <li>Offer support and resources to families of missing persons</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h2>Join Our Cause</h2>
+                <p>Every individual can make a difference. Whether you're reporting a case, sharing information, or volunteering your time, your contribution can help bring someone home. Join us in our mission to reunite families and strengthen communities.</p>
+                <a href="{% url 'register' %}" class="btn btn-primary mt-3">Join KumbiTrace</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

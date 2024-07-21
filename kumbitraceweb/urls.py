@@ -28,7 +28,7 @@ urlpatterns = [
 
     path('report', views.report_missing_person, name='report_missing_person'),
 
-    path('missing-person/<int:pk>/', views.missing_person_detail, name='missing_person_detail'),
+    path('missing_person/<int:case_number>/', views.missing_person_detail, name='missing_person_detail'),
 
     path('user-logout', views.user_logout, name="user-logout"),
 

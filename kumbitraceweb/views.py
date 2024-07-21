@@ -10,9 +10,16 @@ from .forms import CustomUserCreationForm, CustomAuthenticationForm, MissingPers
 from .models import *
 from django.utils import timezone
 import pytz
+from django.db.models import Q
+
+
+from .models import MissingPerson
 
 def homepage(request):
-    return render(request, 'kumbitraceweb/index.html')
+    missing_persons = MissingPerson.objects.filter(status='approved').order_by('-date_reported')[:6]
+    print(f"Number of missing persons: {missing_persons.count()}")
+    return render(request, 'kumbitraceweb/index.html', {'missing_persons': missing_persons})
+     
 
 def about(request):
     return render(request, 'kumbitraceweb/about.html')
@@ -40,34 +47,68 @@ def report_missing_person(request):
     return render(request, 'kumbitraceweb/report_missing_person.html', {'form': form})
 
 def search(request):
-    query = request.GET.get('query')
-    missing_persons = None
+    query = request.GET.get('query', '')
+    missing_persons = MissingPerson.objects.filter(status='approved')
+    
     if query:
-        missing_persons = MissingPerson.objects.filter(
-            models.Q(name__icontains=query) |
-            models.Q(case_number__icontains=query)
+        missing_persons = missing_persons.filter(
+            Q(name__icontains=query) |
+            Q(case_number__icontains=query)
         )
-    return render(request, 'kumbitraceweb/search.html', {'missing_persons': missing_persons, 'query': query})
-
+    
+    context = {
+        'missing_persons': missing_persons,
+        'query': query
+    }
+    return render(request, 'kumbitraceweb/search.html', context)
 def tip(request):
+    case_number = request.GET.get('case_number')
+    missing_person = None
+    active_cases = MissingPerson.objects.filter(status='approved')
+
+    if case_number:
+        missing_person = get_object_or_404(MissingPerson, case_number=case_number)
+
     if request.method == 'POST':
         form = TipForm(request.POST)
         if form.is_valid():
             tip = form.save(commit=False)
+            if not missing_person:
+                missing_person = form.cleaned_data['missing_person']
+            tip.missing_person = missing_person
             tip.ip_address = request.META.get('REMOTE_ADDR')
             if request.user.is_authenticated:
                 tip.submitted_by = request.user
             else:
                 tip.is_anonymous = True
+            
+            if form.cleaned_data['phone_number'] or form.cleaned_data['x_username']:
+                tip.is_anonymous = False
+            
             tip.save()
             messages.success(request, 'Tip submitted successfully.')
-            return redirect('homepage')
+            return redirect('missing_person_detail', case_number=missing_person.case_number)
     else:
-        form = TipForm()
-    return render(request, 'kumbitraceweb/tip.html', {'form': form})
+        initial_data = {'missing_person': missing_person} if missing_person else {}
+        form = TipForm(initial=initial_data)
+
+    context = {
+        'form': form,
+        'missing_person': missing_person,
+        'active_cases': active_cases
+    }
+    return render(request, 'kumbitraceweb/tip.html', context)
 
 def found(request):
+    search_query = request.GET.get('search', '')
     found_persons = MissingPerson.objects.filter(status='found')
+    
+    if search_query:
+        found_persons = found_persons.filter(
+            models.Q(name__icontains=search_query) |
+            models.Q(case_number__icontains=search_query)
+        )
+    
     return render(request, 'kumbitraceweb/found.html', {'found_persons': found_persons})
 
 def contact(request):
@@ -81,7 +122,7 @@ def register(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse_lazy('logincustom'))  # Redirect to login page after successful registration
+            return redirect(reverse_lazy('logincustom'))
     else:
         form = CustomUserCreationForm()
     return render(request, 'kumbitraceweb/register.html', {'form': form})
@@ -98,10 +139,8 @@ def logincustom(request):
                 messages.success(request, f"Welcome, {username}! You have been logged in.")
                 return redirect('dashboard')
             else:
-                print(f"Authentication failed for username: {username}")  # Debug print
                 messages.error(request, "Invalid username or password.")
         else:
-            print(f"Form errors: {form.errors}")  # Debug print
             messages.error(request, "Invalid username or password.")
     else:
         form = CustomAuthenticationForm()
@@ -120,26 +159,7 @@ def missing_person_detail(request, case_number):
     missing_person = get_object_or_404(MissingPerson, case_number=case_number)
     tips = missing_person.tips.all().order_by('-date_submitted')
     
-    if request.method == 'POST':
-        tip_form = TipForm(request.POST)
-        if tip_form.is_valid():
-            tip = tip_form.save(commit=False)
-            tip.missing_person = missing_person
-            tip.ip_address = request.META.get('REMOTE_ADDR')
-            if request.user.is_authenticated:
-                tip.submitted_by = request.user
-            else:
-                tip.is_anonymous = True
-            tip.save()
-            messages.success(request, 'Tip submitted successfully.')
-            return redirect('missing_person_detail', case_number=case_number)
-        else:
-            messages.error(request, 'There was an error in your tip. Please correct it and try again.')
-    else:
-        tip_form = TipForm(initial={'missing_person': missing_person})
-    
     return render(request, 'kumbitraceweb/missing_person_detail.html', {
         'missing_person': missing_person,
-        'tip_form': tip_form,
         'tips': tips
     })

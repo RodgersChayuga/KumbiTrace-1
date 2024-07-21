@@ -4,71 +4,38 @@
 
 {% block content %}
     <!-- Missing people section start -->
-<section class="top-location-section">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="top-locations-carousel owl-carousel owl-theme">
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 34, Height: 5'9", Last seen wearing a blue jacket and jeans.</p>
+    <section class="top-location-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    {% if missing_persons %}
+                    <div class="top-locations-carousel owl-carousel owl-theme">
+                        {% for person in missing_persons %}
+                        <!-- single missing person profile start -->
+                        <div class="single-top-location bg-cover bg-overlay" style="background-image: url('{{ person.photo.url }}')">
+                            <div class="location-info">
+                                <span>Last seen: {{ person.last_seen_location }}</span>
+                                <h2>{{ person.name }}</h2>
+                                <p>Age: {{ person.age }}, Gender: {{ person.get_gender_display }}, Last seen: {{ person.last_seen_date }}</p>
+                            </div>
                         </div>
-                    </div><!-- ./ single missing person profile end -->
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 29, Height: 5'6", Last seen wearing a white dress.</p>
-                        </div>
-                    </div><!-- ./ single missing person profile end -->
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 42, Height: 6'1", Last seen wearing a black hoodie and sneakers.</p>
-                        </div>
-                    </div><!-- ./ single missing person profile end -->
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 25, Height: 5'4", Last seen wearing a red blouse and black skirt.</p>
-                        </div>
-                    </div><!-- ./ single missing person profile end -->
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 37, Height: 5'8", Last seen wearing traditional Indian attire.</p>
-                        </div>
-                    </div><!-- ./ single missing person profile end -->
-                    <!-- single missing person profile start -->
-                    <div class="single-top-location bg-cover bg-overlay" style="background-image: url('../static/img/case1.jpg')">
-                        <div class="location-info">
-                            <span>Last seen: Juja(Weteithie) Nairobi, Kenya</span>
-                            <h2>Joseph Mwangi Kairu</h2>
-                            <p>Age: 31, Height: 5'5", Last seen wearing a green coat and blue jeans.</p>
-                        </div>
-                    </div><!-- ./ single missing person profile end -->
+                        <!-- single missing person profile end -->
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p>No missing persons reports at this time.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Missing people section end -->
+    </section>
+    <!-- Missing people section end -->
 
 
 
 
 
-    <!-- how it works section start -->
+<!-- how it works section start -->
 <section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('../static/img/abd.jpg')">
     <div class="container">
         <div class="row">
@@ -84,7 +51,7 @@
                 <div class="single-how-works d-flex align-items-start">
                     <div class="how-icon">
                         <span>01</span>
-                        <img src="../static/img/kat.png" alt="kumbitrace">
+                        <i class="fas fa-file-alt"></i>
                     </div>
                     <div class="how-works">
                         <h3>Report a Missing Person</h3>
@@ -96,11 +63,11 @@
                 <div class="single-how-works d-flex align-items-start">
                     <div class="how-icon">
                         <span>02</span>
-                        <img src="../static/img/exterior.png" alt="kumbitrace">
+                        <i class="fas fa-share-alt"></i>
                     </div>
                     <div class="how-works">
                         <h3>Spread the Word</h3>
-                        <p>We share the missing person’s profile across various platforms and alert our community to be on the lookout.</p>
+                        <p>We share the missing person's profile across various platforms and alert our community to be on the lookout.</p>
                     </div>
                 </div>
             </div>
@@ -108,7 +75,7 @@
                 <div class="single-how-works d-flex align-items-start">
                     <div class="how-icon">
                         <span>03</span>
-                        <img src="../static/img/armchair.png" alt="kumbitrace">
+                        <i class="fas fa-lightbulb"></i>
                     </div>
                     <div class="how-works">
                         <h3>Receive and Act on Tips</h3>
@@ -122,188 +89,24 @@
 <!-- how it works section end -->
 
 
-    <!-- Partners section start -->
-<section class="top-event-section section-padding">
+    
+
+
+<!-- promo section start -->
+<section class="promo-section parallax section-padding bg-cover bg-overlay" style="background-image: url('../static/img/bgz.jpg')">
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-xl-12 text-center">
-                <div class="section-title">
-                    <h2>Partners</h2>
-                    <span>Our dedicated partners supporting our mission</span>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="kumbitrace-item-carousel owl-carousel owl-theme">
-                    <!-- single item box start -->
-                    <div class="single-popular-item">
-                        <div class="item-cover-image bg-cover" style="background-image: url('../static/img/lsk.png')">
-                            <div class="tags">
-                                <ul>
-                                    <li><a href="/">Non-Profit</a></li>
-                                    <li><a href="/">Support</a></li>
-                                </ul>
-                                <a href="/" class="btn-wishlist"><i class="far fa-heart"></i></a>
-                            </div>
-                            <div class="item-details">
-                                <div class="brand">
-                                    <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    <span class="item-price">Contact: info@partner1.org</span>
-                                </div>
-                                <div class="item-category">
-                                    <div class="cat-icon">
-                                        <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h4><a href='partner-details.html'>Partner 1: Helping Hands</a></h4>
-                            <div class="item-store-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                123 Main Street, Anytown, USA
-                            </div>
-                            <div class="item-meta-data open">
-                                <ul>
-                                    <li><i class="far fa-clock"></i><span>Open</span> Mon-Fri 9:00 AM - 6:00 PM</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single item box end -->
-                    <!-- single item box start -->
-                    <div class="single-popular-item">
-                        <div class="item-cover-image bg-cover" style="background-image: url('../static/img/lsk.png')">
-                            <div class="tags">
-                                <ul>
-                                    <li><a href="/">Corporate</a></li>
-                                    <li><a href="/">Funding</a></li>
-                                </ul>
-                                <a href="/" class="btn-wishlist"><i class="far fa-heart"></i></a>
-                            </div>
-                            <div class="item-details">
-                                <div class="brand">
-                                    <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    <span class="item-price">Contact: info@partner2.org</span>
-                                </div>
-                                <div class="item-category">
-                                    <div class="cat-icon">
-                                        <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h4><a href='partner-details.html'>Partner 2: Corporate Care</a></h4>
-                            <div class="item-store-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                456 Business Road, Metropolis, USA
-                            </div>
-                            <div class="item-meta-data open">
-                                <ul>
-                                    <li><i class="far fa-clock"></i><span>Open</span> Mon-Fri 8:00 AM - 5:00 PM</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single item box end -->
-                    <!-- single item box start -->
-                    <div class="single-popular-item">
-                        <div class="item-cover-image bg-cover" style="background-image: url('../static/img/lsk.png')">
-                            <div class="tags">
-                                <ul>
-                                    <li><a href="/">NGO</a></li>
-                                    <li><a href="/">Awareness</a></li>
-                                </ul>
-                                <a href="/" class="btn-wishlist"><i class="far fa-heart"></i></a>
-                            </div>
-                            <div class="item-details">
-                                <div class="brand">
-                                    <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    <span class="item-price">Contact: info@partner3.org</span>
-                                </div>
-                                <div class="item-category">
-                                    <div class="cat-icon">
-                                        <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h4><a href='partner-details.html'>Partner 3: Awareness Alliance</a></h4>
-                            <div class="item-store-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                789 Charity Lane, Helpville, USA
-                            </div>
-                            <div class="item-meta-data open">
-                                <ul>
-                                    <li><i class="far fa-clock"></i><span>Open</span> Mon-Fri 9:00 AM - 5:00 PM</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single item box end -->
-                    <!-- single item box start -->
-                    <div class="single-popular-item">
-                        <div class="item-cover-image bg-cover" style="background-image: url('../static/img/lsk.png')">
-                            <div class="tags">
-                                <ul>
-                                    <li><a href="/">Community</a></li>
-                                    <li><a href="/">Engagement</a></li>
-                                </ul>
-                                <a href="/" class="btn-wishlist"><i class="far fa-heart"></i></a>
-                            </div>
-                            <div class="item-details">
-                                <div class="brand">
-                                    <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    <span class="item-price">Contact: info@partner4.org</span>
-                                </div>
-                                <div class="item-category">
-                                    <div class="cat-icon">
-                                        <img src="../static/img/lsk.png" alt="kumbitrace">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="item-content">
-                            <h4><a href='partner-details.html'>Partner 4: Community Connect</a></h4>
-                            <div class="item-store-location">
-                                <i class="fas fa-map-marker-alt"></i>
-                                321 Support Blvd, Townsville, USA
-                            </div>
-                            <div class="item-meta-data open">
-                                <ul>
-                                    <li><i class="far fa-clock"></i><span>Open</span> Mon-Fri 10:00 AM - 7:00 PM</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- single item box end -->
+        <div class="row d-flex align-items-center">
+            <div class="col-xl-7 col-sm-12 col-md-7">
+                <div class="promo-content">
+                    <h1>Help Get Them Home. Post On My Socials.</h1>
+                    <p>#KumbiTrace #LetsGetThemHome</p>
+                    <a href="https://x.com/KumbiTrace" target="_blank" rel="noopener noreferrer" class="btn-promo">Follow Us on X</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<!-- Partners section end -->
-
-
-    <!-- promo section start -->
-    <section class="promo-section parallax section-padding bg-cover bg-overlay" style="background-image: url('../static/img/bgz.jpg')">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-xl-7 col-sm-12 col-md-7">
-                    <div class="promo-content">
-                        <h1>We The People of Kenya</h1>
-                        <p>Preamble of the Constitution</p>
-                        <a href="/" class="btn-promo">Visit Site</a>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </section>
-    <!-- promo section end -->
+<!-- promo section end -->
 
 
 
@@ -327,3 +130,29 @@
 
 
     {% endblock %}
+
+    {% block extra_js %}
+<script>
+    $(document).ready(function(){
+        $(".top-locations-carousel").owlCarousel({
+            items: 3,
+            loop: true,
+            margin: 30,
+            nav: true,
+            dots: false,
+            autoplay: true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:2
+                },
+                1000:{
+                    items:3
+                }
+            }
+        });
+    });
+</script>
+{% endblock %}
