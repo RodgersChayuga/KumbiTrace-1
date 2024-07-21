@@ -19,7 +19,11 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('kumbitraceweb.urls')),
+    path('home/', include('kumbi_trace.home.urls')),
+    path('user/', include('kumbi_trace.user.urls')),
+    path('record/', include('kumbi_trace.record.urls')),
+    path('verify/', include('kumbi_trace.verify.urls')),
+    path('dashboard/', include('kumbi_trace.report.urls')),
 ]
 
 admin.site.index_title = 'KumbiTrace'
