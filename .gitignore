@@ -16,6 +16,10 @@ env/
 # VS Code settings
 .vscode/
 
+#Vim caches
+*.un~
+*.swp
+
 # macOS
 .DS_Store
 
