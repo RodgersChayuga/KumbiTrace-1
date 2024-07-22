@@ -1,158 +1,174 @@
-{% extends "kumbitraceweb/base.html" %}
-
-{% block title %}KumbiTrace{% endblock %}
-
-{% block content %}
-    <!-- Missing people section start -->
-    <section class="top-location-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {% if missing_persons %}
-                    <div class="top-locations-carousel owl-carousel owl-theme">
-                        {% for person in missing_persons %}
-                        <!-- single missing person profile start -->
-                        <div class="single-top-location bg-cover bg-overlay" style="background-image: url('{{ person.photo.url }}')">
-                            <div class="location-info">
-                                <span>Last seen: {{ person.last_seen_location }}</span>
-                                <h2>{{ person.name }}</h2>
-                                <p>Age: {{ person.age }}, Gender: {{ person.get_gender_display }}, Last seen: {{ person.last_seen_date }}</p>
-                            </div>
-                        </div>
-                        <!-- single missing person profile end -->
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <p>No missing persons reports at this time.</p>
-                    {% endif %}
-                </div>
+{% extends "kumbitraceweb/base.html" %} {% block title %} KumbiTrace         
+{%endblock%} {% block content %}
+<!-- Missing people section start -->
+<section class="top-location-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        {% if missing_persons %}
+        <div class="top-locations-carousel owl-carousel owl-theme">
+          {% for person in missing_persons %}
+          <!-- single missing person profile start -->
+          <div
+            class="bg-cover single-top-location bg-overlay"
+            style="background-image: url('{{ person.photo.url }}')"
+          >
+            <div class="location-info">
+              <span>Last seen: {{ person.last_seen_location }}</span>
+              <h2>{{ person.name }}</h2>
+              <p>
+                Age: {{ person.age }}, Gender: {{ person.get_gender_display }},
+                Last seen: {{ person.last_seen_date }}
+              </p>
             </div>
+          </div>
+          <!-- single missing person profile end -->
+          {% endfor %}
         </div>
-    </section>
-    <!-- Missing people section end -->
-
-
-
-
+        {% else %}
+        <p>No missing persons reports at this time.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Missing people section end -->
 
 <!-- how it works section start -->
-<section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('../static/img/abd.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-xl-12 text-center">
-                <div class="section-title white-color">
-                    <h2>How It Works</h2>
-                    <span>Our process for helping find missing persons</span>
-                </div>
-            </div>
+<section
+  class="bg-cover how-it-works bg-overlay section-padding parallax-2"
+  style="background-image: url('../static/img/abd.jpg')"
+>
+  <div class="container">
+    <div class="row">
+      <div class="text-center col-sm-12 col-xl-12">
+        <div class="section-title white-color">
+          <h2>How It Works</h2>
+          <span>Our process for helping find missing persons</span>
         </div>
-        <div class="row">
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>01</span>
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Report a Missing Person</h3>
-                        <p>Submit a report with details about the missing person, including their last known location and appearance.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>02</span>
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Spread the Word</h3>
-                        <p>We share the missing person's profile across various platforms and alert our community to be on the lookout.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>03</span>
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Receive and Act on Tips</h3>
-                        <p>We gather tips from the public and work with authorities to follow leads and locate the missing person.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-xl-4 col-md-12 col-sm-12">
+        <div class="single-how-works d-flex align-items-start">
+          <div class="how-icon">
+            <span>01</span>
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <div class="how-works">
+            <h3>Report a Missing Person</h3>
+            <p>
+              Submit a report with details about the missing person, including
+              their last known location and appearance.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12 col-sm-12">
+        <div class="single-how-works d-flex align-items-start">
+          <div class="how-icon">
+            <span>02</span>
+            <i class="fas fa-share-alt"></i>
+          </div>
+          <div class="how-works">
+            <h3>Spread the Word</h3>
+            <p>
+              We share the missing person's profile across various platforms and
+              alert our community to be on the lookout.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-4 col-md-12 col-sm-12">
+        <div class="single-how-works d-flex align-items-start">
+          <div class="how-icon">
+            <span>03</span>
+            <i class="fas fa-lightbulb"></i>
+          </div>
+          <div class="how-works">
+            <h3>Receive and Act on Tips</h3>
+            <p>
+              We gather tips from the public and work with authorities to follow
+              leads and locate the missing person.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 <!-- how it works section end -->
 
-
-    
-
-
 <!-- promo section start -->
-<section class="promo-section parallax section-padding bg-cover bg-overlay" style="background-image: url('../static/img/bgz.jpg')">
-    <div class="container">
-        <div class="row d-flex align-items-center">
-            <div class="col-xl-7 col-sm-12 col-md-7">
-                <div class="promo-content">
-                    <h1>Help Get Them Home. Post On My Socials.</h1>
-                    <p>#KumbiTrace #LetsGetThemHome</p>
-                    <a href="https://x.com/KumbiTrace" target="_blank" rel="noopener noreferrer" class="btn-promo">Follow Us on X</a>
-                </div>
-            </div>
+<section
+  class="bg-cover promo-section parallax section-padding bg-overlay"
+  style="background-image: url('../static/img/bgz.jpg')"
+>
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-xl-7 col-sm-12 col-md-7">
+        <div class="promo-content">
+          <h1>Help Get Them Home. Post On My Socials.</h1>
+          <p>#KumbiTrace #LetsGetThemHome</p>
+          <a
+            href="https://x.com/KumbiTrace"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-promo"
+            >Follow Us on X</a
+          >
         </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- promo section end -->
 
-
-
-    <!-- call to action section start -->
-    <section class="call-to-action-wrap bg-cover" style="background-image: url('../static/img/call-to-action-bg.jpg')">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-xl-8 col-sm-12  col-md-7">
-                    <div class="call-to-action">
-                        <h2>Join Our Amazing Community</h2>
-                        <span>Join us on Discord and help us make a difference.</span>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-sm-12 col-md-5 text-lg-right">
-                    <a href="/" class="call-action-btn"><i class="far fa-check-circle"></i>Contact Now</a>
-                </div>
-            </div>
+<!-- call to action section start -->
+<section
+  class="bg-cover call-to-action-wrap"
+  style="background-image: url('../static/img/call-to-action-bg.jpg')"
+>
+  <div class="container">
+    <div class="row d-flex align-items-center">
+      <div class="col-xl-8 col-sm-12 col-md-7">
+        <div class="call-to-action">
+          <h2>Join Our Amazing Community</h2>
+          <span>Join us on Discord and help us make a difference.</span>
         </div>
-    </section>
-    <!-- call to action section end -->
+      </div>
+      <div class="col-xl-4 col-sm-12 col-md-5 text-lg-right">
+        <a href="/" class="call-action-btn"
+          ><i class="far fa-check-circle"></i>Contact Now</a
+        >
+      </div>
+    </div>
+  </div>
+</section>
+<!-- call to action section end -->
 
-
-    {% endblock %}
-
-    {% block extra_js %}
+{% endblock %} {% block extra_js %}
 <script>
-    $(document).ready(function(){
-        $(".top-locations-carousel").owlCarousel({
-            items: 3,
-            loop: true,
-            margin: 30,
-            nav: true,
-            dots: false,
-            autoplay: true,
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:2
-                },
-                1000:{
-                    items:3
-                }
-            }
-        });
+  $(document).ready(function () {
+    $(".top-locations-carousel").owlCarousel({
+      items: 3,
+      loop: true,
+      margin: 30,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 3,
+        },
+      },
     });
+  });
 </script>
 {% endblock %}
