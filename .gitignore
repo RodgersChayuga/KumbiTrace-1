@@ -36,3 +36,7 @@ develop-eggs
 
 # PyCharm settings
 .idea/
+
+# Node modules
+node_modules
+package-lock.json

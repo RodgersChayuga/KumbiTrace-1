@@ -1,81 +1,77 @@
-{% extends "kumbitraceweb/base.html" %}
+{% extends "kumbitraceweb/base.html" %} {% block title %} Login - KumbiTrace
+{%endblock %} {% block content %}
 
-{% block title %}Login - KumbiTrace{% endblock %}
-
-{% block content %}
-    <!-- breadcrumb section start -->
-    <section class="breadcrumb-banner bg-cover bg-overlay parallax-2" style="background-image: url('../static/img/breadcrumb_bg.jpg')">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12 col-sm-12">
-                    <div class="breadcrumb-inner text-center">
-                        <h2>Login</h2>
-                    </div>
-                </div>
-            </div>
+<section class="border-b-[0.5px] border-gray-900">
+  <div
+    class="flex flex-col items-center justify-center max-w-screen-xl gap-12 mx-auto"
+  >
+    <h2 class="text-lg md:text-2xl font-extrabold text-[#BB0000]">
+      LOGIN TO CONTINUE
+    </h2>
+    <form
+      class="w-[80%] md:w-[40%] mx-auto"
+      method="POST"
+      action="{% url 'logincustom' %}"
+    >
+      {% csrf_token %} {% if form.non_field_errors %}
+      <div class="alert alert-danger" role="alert">
+        {{ form.non_field_errors }}
+      </div>
+      {% endif %}
+      <div class="my-5">
+        <label
+          htmlFor="name"
+          class="block text-base font-medium text-[#060709]"
+        >
+          NAME/EMAIL: <span class="text-red-600">*</span>
+        </label>
+        {{ form.username }} {% for error in form.username.errors %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="my-5">
+        <label
+          htmlFor="email"
+          class="block text-base font-medium text-[#07074D]"
+        >
+          PASSWORD: <span class="text-red-600">*</span>
+        </label>
+        {{ form.password }} {% for error in form.password.errors %}
+        <div class="alert alert-danger" role="alert">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="flex flex-col items-center md:flex-row md:justify-between">
+        <div class="flex items-center mb-4">
+          <input
+            id="rememberMe"
+            name="remember_me"
+            type="checkbox"
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
+          />
+          <label for="rememberMe" class="font-medium text-black ms-2">
+            REMEMBER
+          </label>
         </div>
-    </section>
-    <!-- breadcrumb section end -->
+      </div>
 
-    <!-- login section start -->
-    <div class="login-area section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-4 col-sm-12 col-md-8 offset-lg-4 offset-md-2">
-                    <div class="login-form">
-                        <form method="POST" action="{% url 'logincustom' %}">
-                            {% csrf_token %}
-                            {% if form.non_field_errors %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form.non_field_errors }}
-                                </div>
-                            {% endif %}
-                        
-                            <!-- Username Input -->
-                            <div class="input-group mb-3">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                </div>
-                                {{ form.username }}
-                                {% for error in form.username.errors %}
-                                    <div class="alert alert-danger" role="alert">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        
-                            <!-- Password Input -->
-                            <div class="input-group mb-3">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
-                                </div>
-                                {{ form.password }}
-                                {% for error in form.password.errors %}
-                                    <div class="alert alert-danger" role="alert">{{ error }}</div>
-                                {% endfor %}
-                            </div>
-                        
-                            <!-- Login Button -->
-                            <button type="submit" class="btn-submit btn-block">Login</button>
-                        
-                            <!-- Remember Me Checkbox -->
-                            <div class="form-check mt-3">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                            </div>
-                        </form>
-
-                        
-
-                        <!-- Sign Up Link -->
-                        <div class="mt-4 text-center">
-                            <div class="d-flex justify-content-center links">
-                                Don't have an account? <a href="{% url 'register' %}" class="ml-2" style="color: #8cc03e;">Sign Up</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- login section end -->
+      <div class="flex justify-center my-12">
+        <button
+          type="submit"
+          class="hover:shadow-form rounded-md bg-[#060709] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+        >
+          LOGIN
+        </button>
+      </div>
+      <div class="flex justify-center my-12">
+        <h2 class="text-sm md:text-md font-extrabold text-[#060709]">
+          HAVE AN ACCOUNT?
+          <a href="{% url 'register' %}" class="text-[#D82126] mr-1">
+            SIGN UP
+          </a>
+          LOGIN INSTEAD.
+        </h2>
+      </div>
+    </form>
+  </div>
+</section>
 {% endblock %}

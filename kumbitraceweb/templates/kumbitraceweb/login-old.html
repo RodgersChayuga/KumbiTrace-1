@@ -1,0 +1,88 @@
+{% extends "kumbitraceweb/base.html" %} {% block title %}Login - KumbiTrace
+{%endblock %} {% block content %}
+<!-- breadcrumb section start -->
+<section
+  class="bg-cover breadcrumb-banner bg-overlay parallax-2"
+  style="background-image: url('../static/img/breadcrumb_bg.jpg')"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12 col-sm-12">
+        <div class="text-center breadcrumb-inner">
+          <h2>Login</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- breadcrumb section end -->
+
+<!-- login section start -->
+
+<div class="login-area section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-4 col-sm-12 col-md-8 offset-lg-4 offset-md-2">
+        <div class="login-form">
+          <form method="POST" action="{% url 'logincustom' %}">
+            {% csrf_token %} {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+              {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            <!-- Username Input -->
+            <div class="mb-3 input-group">
+              <div class="input-group-append">
+                <span class="input-group-text"
+                  ><i class="fas fa-user"></i
+                ></span>
+              </div>
+              {{ form.username }} {% for error in form.username.errors %}
+              <div class="alert alert-danger" role="alert">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Password Input -->
+            <div class="mb-3 input-group">
+              <div class="input-group-append">
+                <span class="input-group-text"><i class="fas fa-key"></i></span>
+              </div>
+              {{ form.password }} {% for error in form.password.errors %}
+              <div class="alert alert-danger" role="alert">{{ error }}</div>
+              {% endfor %}
+            </div>
+
+            <!-- Login Button -->
+            <button type="submit" class="btn-submit btn-block">Login</button>
+
+            <!-- Remember Me Checkbox -->
+            <div class="mt-3 form-check">
+              <input
+                type="checkbox"
+                class="form-check-input"
+                id="rememberMe"
+                name="remember_me"
+              />
+              <label class="form-check-label" for="rememberMe"
+                >Remember me</label
+              >
+            </div>
+          </form>
+
+          <!-- Sign Up Link -->
+          <div class="mt-4 text-center">
+            <div class="d-flex justify-content-center links">
+              Don't have an account?
+              <a href="{% url 'register' %}" class="ml-2" style="color: #8cc03e"
+                >Sign Up</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- login section end -->
+{% endblock %}

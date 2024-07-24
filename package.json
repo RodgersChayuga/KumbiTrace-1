@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "tw": "npx tailwindcss -i ./kumbitraceweb/static/tailwind/input.css -o ./kumbitraceweb/static/tailwind/output.css --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.6"
+  },
+  "dependencies": {
+    "flowbite": "^2.4.1"
+  }
+}

@@ -10,7 +10,7 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomAuthenticationForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control',
+        'class': 'w-full px-1 text-base font-medium text-[#6B7280] rounded-md bg-transparent',
         'placeholder': 'Username or Email',
         'autofocus': True
     }))
@@ -18,7 +18,7 @@ class CustomAuthenticationForm(AuthenticationForm):
         label="Password",
         strip=False,
         widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
+            'class': 'w-full px-1 text-base font-medium text-[#6B7280] rounded-md bg-transparent',
             'placeholder': 'Password',
             'autocomplete': 'current-password'
         }),

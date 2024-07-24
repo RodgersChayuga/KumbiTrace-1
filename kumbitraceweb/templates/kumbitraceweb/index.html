@@ -1,158 +1,345 @@
-{% extends "kumbitraceweb/base.html" %}
+{% extends "kumbitraceweb/base.html" %} {% block title %} KumbiTrace
+{%endblock%} {% block content %}
+<!-- Missing people section start -->
+<section class="mb-8 top-location-section">
+  <div
+    class="container max-w-screen-xl gap-12 mx-auto border-[0.5px] border-b-black"
+  >
+    <!-- <div class="search-header">
+      <div class="container">
+        <h1 class="mb-4 text-center">Search Missing Persons</h1>
+        <form method="GET" action="{% url 'search' %}" class="mb-4">
+          <div class="input-group">
+            <input
+              type="text"
+              name="query"
+              class="form-control form-control-lg"
+              placeholder="Search by name or case number"
+              value="{{ query|default:'' }}"
+            />
+            <button type="submit" class="btn btn-primary btn-lg">Search</button>
+          </div>
+        </form>
+      </div>
+    </div> -->
+    <form
+      class="flex items-center max-w-lg pb-4 mx-auto"
+      method="GET"
+      action="{% url 'search' %}"
+    >
+      <label for="voice-search" class="sr-only">Search</label>
+      <div class="relative w-full">
+        <div
+          class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3"
+        ></div>
+        <input
+          type="text"
+          name="query"
+          id="voice-search"
+          class="bg-transparent border-[0.5px] border-black text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5"
+          placeholder="Search by name or case number"
+          value="{{ query|default:'' }}"
+          required
+        />
+        <button
+          type="button"
+          class="absolute inset-y-0 flex items-center end-0 pe-3"
+        ></button>
+      </div>
+      <button
+        type="submit"
+        class="inline-flex items-center py-2.5 px-3 ms-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        <svg
+          class="w-4 h-4 me-2"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        Search
+      </button>
+    </form>
+    <div class="row">
+      <div class="col-sm-12">
+        {% if missing_persons %}
+        <div class="top-locations-carousel owl-carousel owl-theme">
+          {% for person in missing_persons %}
+          <!-- single missing person profile start -->
+          <div class="antialiased text-gray-900 wrapper">
+            <div>
+              <img
+                src="{{ person.photo.url }}"
+                alt=" random imgee"
+                class="object-cover object-center w-full rounded-lg shadow-md"
+              />
 
-{% block title %}KumbiTrace{% endblock %}
-
-{% block content %}
-    <!-- Missing people section start -->
-    <section class="top-location-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    {% if missing_persons %}
-                    <div class="top-locations-carousel owl-carousel owl-theme">
-                        {% for person in missing_persons %}
-                        <!-- single missing person profile start -->
-                        <div class="single-top-location bg-cover bg-overlay" style="background-image: url('{{ person.photo.url }}')">
-                            <div class="location-info">
-                                <span>Last seen: {{ person.last_seen_location }}</span>
-                                <h2>{{ person.name }}</h2>
-                                <p>Age: {{ person.age }}, Gender: {{ person.get_gender_display }}, Last seen: {{ person.last_seen_date }}</p>
-                            </div>
-                        </div>
-                        <!-- single missing person profile end -->
-                        {% endfor %}
+              <div class="relative px-4 -mt-16">
+                <div class="p-6 bg-white rounded-lg shadow-sm">
+                  <h4
+                    class="mt-1 text-xl font-semibold leading-tight uppercase truncate"
+                  >
+                    {{ person.name }}
+                  </h4>
+                  <div
+                    class="flex items-baseline border-b-[0.5px] pb-2 font-semibold"
+                  >
+                    Age:
+                    <span
+                      class="inline-block px-2 text-xs font-semibold tracking-wide text-teal-800 uppercase bg-teal-200 rounded-full"
+                    >
+                      {{ person.age }}
+                    </span>
+                    <div class="ml-2 text-xs">
+                      <span class="font-semibold">Gender :</span>
+                      {{person.get_gender_display }}
                     </div>
-                    {% else %}
-                    <p>No missing persons reports at this time.</p>
-                    {% endif %}
+                  </div>
+
+                  <div class="mt-1">
+                    <span class="font-semibold">Last seen: </span>
+                    {{ person.last_seen_location }}
+                  </div>
+                  <div class="mt-1">
+                    <span class="font-semibold">Last seen: </span>
+                    {{person.last_seen_date }}
+                  </div>
+                  <div
+                    class="flex justify-between mt-2 border-t-[0.5px] pt-2 items-center"
+                  >
+                    <div>
+                      Case No:
+                      <span class="p-2 bg-green-500 rounded-xl"
+                        >{{ person.case_number }}</span
+                      >
+                    </div>
+                    <button class="p-2 text-white rounded-md bg-blue-950">
+                      More Details
+                    </button>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
+          <!-- single missing person profile end -->
+          {% endfor %}
         </div>
-    </section>
-    <!-- Missing people section end -->
-
-
-
-
+        {% else %}
+        <p>No missing persons reports at this time.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Missing people section end -->
 
 <!-- how it works section start -->
-<section class="how-it-works bg-overlay section-padding bg-cover parallax-2" style="background-image: url('../static/img/abd.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 col-xl-12 text-center">
-                <div class="section-title white-color">
-                    <h2>How It Works</h2>
-                    <span>Our process for helping find missing persons</span>
-                </div>
-            </div>
+
+<section>
+  <div
+    class="flex pb-12 flex-col border-b-[0.5px] border-gray-900 items-center justify-center max-w-screen-xl gap-12 mx-auto md:py-24"
+  >
+    <h2 class="text-1xl md:text-3xl font-bold text-[#D82126]">HOW IT WORKS</h2>
+    <div class="flex flex-col items-center justify-center gap-4 md:flex-row">
+      <div class="flex items-start justify-center mr-4">
+        <div class="gap-4 mr-6">
+          <span class="text-2xl">01</span>
+          <i class="text-8xl fas fa-file-alt"></i>
         </div>
-        <div class="row">
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>01</span>
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Report a Missing Person</h3>
-                        <p>Submit a report with details about the missing person, including their last known location and appearance.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>02</span>
-                        <i class="fas fa-share-alt"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Spread the Word</h3>
-                        <p>We share the missing person's profile across various platforms and alert our community to be on the lookout.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-md-12 col-sm-12">
-                <div class="single-how-works d-flex align-items-start">
-                    <div class="how-icon">
-                        <span>03</span>
-                        <i class="fas fa-lightbulb"></i>
-                    </div>
-                    <div class="how-works">
-                        <h3>Receive and Act on Tips</h3>
-                        <p>We gather tips from the public and work with authorities to follow leads and locate the missing person.</p>
-                    </div>
-                </div>
-            </div>
+        <div>
+          <h5 class="mb-2 text-2xl font-extrabold tracking-tight text-red-600">
+            Report a Missing Person
+          </h5>
+          <p>
+            Submit a report with details about the missing person, including
+            their last known location and appearance.
+          </p>
         </div>
+      </div>
+      <div class="flex items-start justify-center mx-4">
+        <div class="gap-4 mx-6">
+          <span class="text-2xl">02</span>
+          <i class="text-8xl fas fa-share-alt"></i>
+        </div>
+        <div>
+          <h5 class="mb-2 text-2xl font-extrabold tracking-tight text-red-600">
+            Spread the Word
+          </h5>
+          <p>
+            We share the missing person's profile across various platforms and
+            alert our community to be on the lookout.
+          </p>
+        </div>
+      </div>
+      <div class="flex items-start justify-center ml-4">
+        <div class="gap-4 mr-6">
+          <span class="text-2xl">03</span>
+          <i class="fas fa-lightbulb text-8xl"></i>
+        </div>
+        <div>
+          <h5 class="mb-2 text-2xl font-extrabold tracking-tight text-red-600">
+            Receive and Act on Tips
+          </h5>
+          <p>
+            We gather tips from the public and work with authorities to follow
+            leads and locate the missing person.
+          </p>
+        </div>
+      </div>
     </div>
+  </div>
 </section>
 <!-- how it works section end -->
 
-
-    
-
-
 <!-- promo section start -->
-<section class="promo-section parallax section-padding bg-cover bg-overlay" style="background-image: url('../static/img/bgz.jpg')">
-    <div class="container">
-        <div class="row d-flex align-items-center">
-            <div class="col-xl-7 col-sm-12 col-md-7">
-                <div class="promo-content">
-                    <h1>Help Get Them Home. Post On My Socials.</h1>
-                    <p>#KumbiTrace #LetsGetThemHome</p>
-                    <a href="https://x.com/KumbiTrace" target="_blank" rel="noopener noreferrer" class="btn-promo">Follow Us on X</a>
-                </div>
-            </div>
-        </div>
+
+<section
+  class="flex flex-col items-center py-12 border-b-[0.5px] border-gray-900"
+>
+  <h2 class="text-1xl md:text-3xl py-8 font-bold text-[#D82126]">
+    HOW TO HELP US GET THEM HOME
+  </h2>
+  <div
+    class="flex flex-col justify-between max-w-screen-xl gap-12 pt-8 mx-auto md:flex-row"
+  >
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg">
+      <a href="#">
+        <h5
+          class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        >
+          Share with us
+        </h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+        Do you know a missing person, please share more information about them,
+        so we can amplify together:
+      </p>
+      <a
+        href="/report"
+        class="inline-flex items-center font-medium text-blue-600 hover:underline"
+      >
+        Report now
+        <svg
+          class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 18 18"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
+          />
+        </svg>
+      </a>
     </div>
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg">
+      <a href="#">
+        <h5
+          class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        >
+          Follow Us on ( X )
+        </h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+        Be part of this amazing community by following, tagging and retweeting
+        our handle, let's bring them home together:
+      </p>
+      <a
+        href="https://x.com/KumbiTrace"
+        target="_blank"
+        class="inline-flex items-center font-medium text-blue-600 hover:underline"
+      >
+        @KumbiTrace
+        <svg
+          class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 18 18"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
+          />
+        </svg>
+      </a>
+    </div>
+    <div class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg">
+      <a href="#">
+        <h5
+          class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
+        >
+          Join our Discord
+        </h5>
+      </a>
+      <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+        Be part of this amazing community by following, tagging and retweeting
+        our handle, let's bring them home together:
+      </p>
+      <a
+        href="https://discord.gg/DeUjGcfE"
+        target="_blank"
+        class="inline-flex items-center font-medium text-blue-600 hover:underline"
+      >
+        Discord: KumbiTrace
+        <svg
+          class="w-3 h-3 ms-2.5 rtl:rotate-[270deg]"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 18 18"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 11v4.833A1.166 1.166 0 0 1 13.833 17H2.167A1.167 1.167 0 0 1 1 15.833V4.167A1.166 1.166 0 0 1 2.167 3h4.618m4.447-2H17v5.768M9.111 8.889l7.778-7.778"
+          />
+        </svg>
+      </a>
+    </div>
+  </div>
 </section>
 <!-- promo section end -->
 
-
-
-    <!-- call to action section start -->
-    <section class="call-to-action-wrap bg-cover" style="background-image: url('../static/img/call-to-action-bg.jpg')">
-        <div class="container">
-            <div class="row d-flex align-items-center">
-                <div class="col-xl-8 col-sm-12  col-md-7">
-                    <div class="call-to-action">
-                        <h2>Join Our Amazing Community</h2>
-                        <span>Join us on Discord and help us make a difference.</span>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-sm-12 col-md-5 text-lg-right">
-                    <a href="/" class="call-action-btn"><i class="far fa-check-circle"></i>Contact Now</a>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- call to action section end -->
-
-
-    {% endblock %}
-
-    {% block extra_js %}
+{% endblock %} {% block extra_js %}
 <script>
-    $(document).ready(function(){
-        $(".top-locations-carousel").owlCarousel({
-            items: 3,
-            loop: true,
-            margin: 30,
-            nav: true,
-            dots: false,
-            autoplay: true,
-            responsive:{
-                0:{
-                    items:1
-                },
-                600:{
-                    items:2
-                },
-                1000:{
-                    items:3
-                }
-            }
-        });
+  $(document).ready(function () {
+    $(".top-locations-carousel").owlCarousel({
+      items: 3,
+      loop: true,
+      margin: 30,
+      nav: true,
+      dots: false,
+      autoplay: true,
+      responsive: {
+        0: {
+          items: 1,
+        },
+        600: {
+          items: 2,
+        },
+        1000: {
+          items: 3,
+        },
+      },
     });
+  });
 </script>
 {% endblock %}
