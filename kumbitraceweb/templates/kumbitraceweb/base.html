@@ -34,6 +34,7 @@
 
     <!-- Tailwindcss code styling here -->
     <link rel="stylesheet" href="../../static/tailwind/output.css" />
+    <link rel="stylesheet" href="../../static/css/tailwind.css" />
 
     {% block extra_css %}{% endblock %}
 
@@ -59,7 +60,7 @@
     <header class="sticky top-0 z-20">
       <!-- top bar -->
       <div class="py-[10px] border-b-0 bg-[#bb0000]">
-        <div class="container">
+        <div class="container max-w-screen-xl gap-12 mx-auto">
           <div class="row">
             <div class="col-xl-6 col-md-8 col-12">
               <div class="text-black top-bar-left">
@@ -75,11 +76,11 @@
                         ><i class="fas fa-sign-out-alt"></i>Login</a
                       >
                     </li>
-                    <li>
+                    <!-- <li>
                       <a href="/register"
                         ><i class="fas fa-user"></i>Register</a
                       >
-                    </li>
+                    </li> -->
                   </ul>
                 </div>
               </div>
@@ -159,13 +160,13 @@
                   >Find</a
                 >
               </li>
-              <li>
+              <!-- <li>
                 <a
                   href="/contact-us"
                   class="block px-3 py-2 text-gray-900 rounded hover:text-gray-500 md:bg-transparent hover:underline md:p-0"
                   >Contact</a
                 >
-              </li>
+              </li> -->
               <a
                 href="/report"
                 class="block px-3 py-2 text-red-700 border-2 border-red-700 hover:border-red-400 hover:text-red-400"
@@ -180,7 +181,7 @@
     {% endif %} {% block content %}
     <!-- This is where the specific content for each page will go -->
     {% endblock %} {% if messages %}
-    <div class="messages">
+    <div class="messages !body-gradient">
       {% for message in messages %}
       <div
         class="alert alert-{{ message.tags }} alert-dismissible fade show"

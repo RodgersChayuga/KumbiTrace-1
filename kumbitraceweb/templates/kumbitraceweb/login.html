@@ -1,69 +1,71 @@
 {% extends "kumbitraceweb/base.html" %} {% block title %} Login - KumbiTrace
 {%endblock %} {% block content %}
 
-<section className="pb-12 border-b-[0.5px] border-gray-900">
+<section class="border-b-[0.5px] border-gray-900">
   <div
-    class="flex flex-col items-center justify-center max-w-screen-xl gap-12 mx-auto md:py-24"
+    class="flex flex-col items-center justify-center max-w-screen-xl gap-12 mx-auto"
   >
-    <h2 className="text-lg md:text-xl font-extrabold mb-8 text-[#060709] ">
-      LOGIN
+    <h2 class="text-lg md:text-2xl font-extrabold text-[#BB0000]">
+      LOGIN TO CONTINUE
     </h2>
-    <form className="w-[80%] md:w-[40%] mx-auto">
+    <form
+      class="w-[80%] md:w-[40%] mx-auto"
+      method="POST"
+      action="{% url 'logincustom' %}"
+    >
       {% csrf_token %} {% if form.non_field_errors %}
       <div class="alert alert-danger" role="alert">
         {{ form.non_field_errors }}
       </div>
       {% endif %}
-      <div className="my-5">
+      <div class="my-5">
         <label
           htmlFor="name"
-          className=" block text-base font-medium text-[#060709]"
+          class="block text-base font-medium text-[#060709]"
         >
-          NAME/EMAIL: <span className="text-red-600">*</span>
+          NAME/EMAIL: <span class="text-red-600">*</span>
         </label>
         {{ form.username }} {% for error in form.username.errors %}
         <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
       </div>
-      <div className="my-5">
+      <div class="my-5">
         <label
           htmlFor="email"
-          className="block text-base font-medium text-[#07074D]"
+          class="block text-base font-medium text-[#07074D]"
         >
-          PASSWORD: <span className="text-red-600">*</span>
+          PASSWORD: <span class="text-red-600">*</span>
         </label>
         {{ form.password }} {% for error in form.password.errors %}
         <div class="alert alert-danger" role="alert">{{ error }}</div>
         {% endfor %}
       </div>
-      <div
-        className="flex flex-col items-center  md:flex-row md:justify-between"
-      >
-        <div className="flex items-center mb-4">
+      <div class="flex flex-col items-center md:flex-row md:justify-between">
+        <div class="flex items-center mb-4">
           <input
             id="rememberMe"
             name="remember_me"
             type="checkbox"
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded "
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded"
           />
-          <label for="rememberMe" className="ms-2  font-medium text-black">
+          <label for="rememberMe" class="font-medium text-black ms-2">
             REMEMBER
           </label>
         </div>
       </div>
 
-      <div className="flex justify-center my-12">
+      <div class="flex justify-center my-12">
         <button
           type="submit"
-          className="hover:shadow-form  rounded-md bg-[#060709] py-3 px-8 text-center text-base font-semibold text-white outline-none"
+          class="hover:shadow-form rounded-md bg-[#060709] py-3 px-8 text-center text-base font-semibold text-white outline-none"
         >
           LOGIN
         </button>
       </div>
-      <div className="flex justify-center my-12">
-        <h2 className="text-sm md:text-md font-extrabold text-[#060709] ">
+      <div class="flex justify-center my-12">
+        <h2 class="text-sm md:text-md font-extrabold text-[#060709]">
           HAVE AN ACCOUNT?
-          <a href="{% url 'register' %}" className="text-[#D82126] mr-1">
+          <a href="{% url 'register' %}" class="text-[#D82126] mr-1">
             SIGN UP
           </a>
           LOGIN INSTEAD.

@@ -1,0 +1,33 @@
+<section class="mb-8 top-location-section">
+  <div
+    class="container max-w-screen-xl gap-12 mx-auto border-[0.5px] border-b-black"
+  >
+    <div class="row">
+      <div class="col-sm-12">
+        {% if missing_persons %}
+        <div class="top-locations-carousel owl-carousel owl-theme">
+          {% for person in missing_persons %}
+          <!-- single missing person profile start -->
+          <div
+            class="bg-cover single-top-location bg-overlay"
+            style="background-image: url('{{ person.photo.url }}')"
+          >
+            <div class="location-info">
+              <span>Last seen: {{ person.last_seen_location }}</span>
+              <h2>{{ person.name }}</h2>
+              <p>
+                Age: {{ person.age }}, Gender: {{ person.get_gender_display }},
+                Last seen: {{ person.last_seen_date }}
+              </p>
+            </div>
+          </div>
+          <!-- single missing person profile end -->
+          {% endfor %}
+        </div>
+        {% else %}
+        <p>No missing persons reports at this time.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
